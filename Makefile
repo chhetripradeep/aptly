@@ -8,13 +8,14 @@ VERSION=$(shell echo $(TAG) | sed 's@^v@@' | sed 's@-@+@g')
 PACKAGES=context database deb files gpg http query swift s3 utils
 PYTHON?=python
 TESTS?=
+GOPATH=$(shell go env GOPATH)
 BINPATH?=$(GOPATH)/bin
 RUN_LONG_TESTS?=yes
 
 all: modules test bench check system-test
 
 prepare:
-	curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(shell go env GOPATH)/bin v1.19.1
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
 
 modules:
 	go mod download
