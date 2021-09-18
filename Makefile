@@ -8,7 +8,8 @@ VERSION=$(shell echo $(TAG) | sed 's@^v@@' | sed 's@-@+@g')
 PACKAGES=context database deb files gpg http query swift s3 utils
 PYTHON?=python
 TESTS?=
-BINPATH?=$(shell go env GOPATH)/bin
+GOPATH=$(shell go env GOPATH)
+BINPATH?=$(GOPATH)/bin
 RUN_LONG_TESTS?=yes
 
 all: modules test bench check system-test
