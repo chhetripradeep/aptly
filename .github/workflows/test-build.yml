@@ -1,4 +1,4 @@
-name: Build
+name: Test and Build
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     - master
 
 jobs:
-  build:
+  test-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.3.4
@@ -40,5 +40,15 @@ jobs:
     - name: Install golangci-lint
       run: make prepare
 
+    - name: Run tests
+      run: make test
+
     - name: Build aptly
       run: make release
+
+    - name: Upload coverage to codecov
+      uses: codecov/codecov-action@v2.1.0
+      with:
+        file: coverage.txt
+        fail_ci_if_error: true
+        verbose: true

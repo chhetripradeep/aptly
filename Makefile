@@ -14,7 +14,7 @@ RUN_LONG_TESTS?=yes
 all: modules test bench check system-test
 
 prepare:
-	curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(shell go env GOPATH)/bin v1.19.1
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
 
 modules:
 	go mod download
