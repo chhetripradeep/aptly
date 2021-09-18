@@ -23,7 +23,7 @@ jobs:
         python-version: 3.9
 
     - name: Install apt packages
-      run: sudo apt-get install graphviz gnupg2 gpgv2 python-virtualenv
+      run: sudo apt-get install graphviz gnupg2 gpgv2 python3-virtualenv
 
     - name: Setup virtualenv
       run: |
