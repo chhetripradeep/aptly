@@ -1,0 +1,44 @@
+name: Build
+
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.3.4
+
+    - uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Install apt packages
+      run: sudo apt-get install graphviz gnupg2 gpgv2 python-virtualenv
+
+    - name: Setup virtualenv
+      run: |
+        virtualenv system/env
+        . system/env/bin/activate
+
+    - name: Install pip packages
+      run: |
+        pip install six packaging appdirs
+        pip install -U pip setuptools
+        pip install -r system/requirements.txt
+        make version
+
+    - name: Install golangci-lint
+      run: make prepare
+
+    - name: Build aptly
+      run: make release
